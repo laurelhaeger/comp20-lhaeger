@@ -14,7 +14,29 @@
 <div id="lyrics"></div>
 
 <script>
-	// Complete this section and create a CSS file named style.css
+	var vid = document.getElementById("rickroll");
+
+	vid.ontimeupdate = function() {update()};
+
+	function update() {
+		if (vid.currentTime < 18) {
+			document.getElementById("lyrics").innerHTML = "...lyrics to come...";
+		} else if (vid.currentTime > 18 && vid.currentTime < 34.5) {
+			document.getElementById("lyrics").innerHTML = "<div>We're no strangers to love</div><div>You know the rules and so do I</div><div> A full commitment's what I'm thinking of</div><div>You wouldn't get this from any other guy</div>";
+		} else if ((vid.currentTime >= 34.5 && vid.currentTime < 42.5) || (vid.currentTime >= 153 && vid.currentTime < 161)) {
+			document.getElementById("lyrics").innerHTML = "<div>I just wanna tell you how I'm feeling</div><div>Gotta make you understand<div>";
+		} else if ((vid.currentTime >= 42.5 && vid.currentTime < 60) || (vid.currentTime >= 84.5 && vid.currentTime < 119) || (vid.currentTime >= 161 && vid.currentTime < 212)) {
+			document.getElementById("lyrics").innerHTML = "<div>Never gonna give you up</div><div>Never gonna let you down Never gonna run around and desert you</div><div>Never gonna make you cry</div><div>Never gonna say goodbye</div><div>Never gonna tell a lie and hurt you</div>";
+		} else if ((vid.currentTime >= 60 && vid.currentTime < 76) || (vid.currentTime >= 136 && vid.currentTime < 153)) {
+			document.getElementById("lyrics").innerHTML = "<div>We've known each other for so long</div><div>Your heart's been aching, but</div><div>You're too shy to say it</div><div>Inside, we both know what's been going on</div><div>We know the game and we're gonna play it</div>";
+		} else if (vid.currentTime >= 76 && vid.currentTime < 84.5) {
+			document.getElementById("lyrics").innerHTML = "<div>And if you ask me how I'm feeling</div><div>Don't tell me you're too blind to see</div>";
+		} else if (vid.currentTime >= 119 && vid.currentTime < 136) {
+			document.getElementById("lyrics").innerHTML = "<div>(Ooh, give you up)</div><div>(Ooh, give you up)</div><div>Never gonna give, never gonna give</div><div>(Give you up)</div><div>Never gonna give, never gonna give</div><div>(Give you up)</div>";
+		} else if (vid.currentTime >= 212) {
+			document.getElementById("lyrics").innerHTML = "";
+		}
+}
 </script>
 </body>
 </html>	
