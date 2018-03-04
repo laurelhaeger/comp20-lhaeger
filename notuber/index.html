@@ -10,23 +10,30 @@
 	var myLng = -99999;
 	var map;
 	var request;
+	var shortest;
 	function loadData() {
 		request = new XMLHttpRequest();
-		console.log("in load data");
+		//console.log("in load data");
 		request.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
 		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		request.onreadystatechange = function() {
-			console.log("state changed");
+			//console.log("state changed");
 			if (request.readyState == 4 && request.status == 200) {
-				console.log("ready state and status are 4 and 200");
+				//console.log("ready state and status are 4 and 200");
 				theString = request.responseText;
-				console.log(theString);
+				//console.log(theString);
 				messages = JSON.parse(theString);
-				console.log(messages);
+				//console.log(messages);
+				firstTime = 0;
 				for (count = 0; count < messages.vehicles.length; count++) {
-					console.log("Lat: " + messages.vehicles[count].lat + " Long: " + messages.vehicles[count].lng);
-					newMarker(messages.vehicles[count].lat, messages.vehicles[count].lng, "/vehicle.png", messages.vehicles[count].username);
+					//console.log("Lat: " + messages.vehicles[count].lat + " Long: " + messages.vehicles[count].lng);
+					if (count == 0) {
+						firstTime = 1;
+					}
+					newMarker(messages.vehicles[count].lat, messages.vehicles[count].lng, "/vehicle.png", messages.vehicles[count].username, firstTime);
+					firstTime = 0;
 				}
+				newMarker(myLat, myLng, "/icon.jpg", "You");
 			}
 		}
 		request.send("username=M7vIBNgdqn&lat=" + myLat + "&lng=" + myLng);
@@ -36,7 +43,7 @@
 		navigator.geolocation.getCurrentPosition(function(somePos) {
 			myLat = somePos.coords.latitude;
 			myLng = somePos.coords.longitude;
-			console.log("lat: " + myLat + " lng:" + myLng);
+			//console.log("lat: " + myLat + " lng:" + myLng);
 			initMap();
 			loadData();
 		});	
@@ -47,14 +54,33 @@
         	center: {lat: myLat, lng: myLng},
           	zoom: 15
         });
-        newMarker(myLat, myLng, "/icon.jpg", "You");
     }
 
-    function newMarker(lat, lng, icon, title) {
+    function newMarker(lat, lng, icon, title, firstTime) {
     	var image = icon;
+    	var distance = 0;
+    	//console.log("TITLE: " + title);
+    	if (title != "You") {
+    		myPos = new google.maps.LatLng(myLat, myLng);
+    		carPos = new google.maps.LatLng(lat, lng);
+    		//console.log(carPos);
+    		distance = google.maps.geometry.spherical.computeDistanceBetween(myPos, carPos);
+    		distance *= 0.000621371;
+    		if (firstTime == 1) {
+    			shortest = distance;
+    			//console.log("shortest is first distance: " + distance);
+    		} else if (distance < shortest) {
+    			shortest = distance;
+    			//console.log("new shortest: " + distance);
+    		}
+    		//console.log(distance);
+    	} else {
+    		distance = shortest;
+    		//console.log("distance is now the shortest");
+    	}
         var marker = new google.maps.Marker({
 			position: {lat: lat, lng: lng},
-			title: title,
+			title: "User: " + title + " Distance: " + distance + " miles",
 			icon: image
 		});
 		var infowindow = new google.maps.InfoWindow();
@@ -65,7 +91,7 @@
 		});
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8GsxVbGljcZT6zUCFid7sNMJsd2R7ot4&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8GsxVbGljcZT6zUCFid7sNMJsd2R7ot4&callback=initMap&libraries=geometry"
     async defer></script>
 </head>
 <body onload = "getLocation()">
