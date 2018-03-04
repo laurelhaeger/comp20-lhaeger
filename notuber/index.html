@@ -10,8 +10,6 @@
 	var myLng = -99999;
 	var map;
 	var request;
-	var messages;
-	var theStirng;
 	function loadData() {
 		request = new XMLHttpRequest();
 		console.log("in load data");
@@ -52,9 +50,9 @@
         newMarker(myLat, myLng, "/icon.jpg", "You");
     }
 
-    function newMarker(lat, lng, icon, title){
+    function newMarker(lat, lng, icon, title) {
     	var image = icon;
-        marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
 			position: {lat: lat, lng: lng},
 			title: title,
 			icon: image
