@@ -22,18 +22,19 @@
 				theString = request.responseText;
 				messages = JSON.parse(theString);
 				firstTime = 0;
-				console.log(theString[2]);
 				oppImage = "/vehicle.png";
 				youImage = "/icon.jpg";
+				ray = messages.vehicles;
 				if (theString[2] == "p") {
 					oppImage = "/icon.jpg";
 					youImage = "/vehicle.png";
+					ray = message.passengers;
 				}
-				for (count = 0; count < messages.vehicles.length; count++) {
+				for (count = 0; count < ray.length; count++) {
 					if (count == 0) {
 						firstTime = 1;
 					}
-					newMarker(messages.vehicles[count].lat, messages.vehicles[count].lng, oppImage, messages.vehicles[count].username, firstTime);
+					newMarker(ray[count].lat, ray[count].lng, oppImage, ray[count].username, firstTime);
 					firstTime = 0;
 				}
 				newMarker(myLat, myLng, youImage, "You");
@@ -46,14 +47,12 @@
 		navigator.geolocation.getCurrentPosition(function(somePos) {
 			myLat = somePos.coords.latitude;
 			myLng = somePos.coords.longitude;
-			console.log("got my location");
 			initMap();
 			loadData();
 		});	
 	}
 
 	function initMap() {
-		console.log("create new map");
         map = new google.maps.Map(document.getElementById('map'), {
         	center: {lat: myLat, lng: myLng},
           	zoom: 15
@@ -76,6 +75,7 @@
     	} else {
     		distance = shortest;
     	}
+    	distance = Math.round(distance * 1000) / 1000;
         var marker = new google.maps.Marker({
 			position: {lat: lat, lng: lng},
 			title: "User: " + title + " Distance: " + distance + " miles",
