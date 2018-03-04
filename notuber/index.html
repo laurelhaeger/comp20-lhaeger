@@ -9,6 +9,7 @@
 <script>
 	var myLat = -99999;
 	var myLng = -99999;
+	var userTitle = "M7vIBNgdqn"
 	var map;
 	var request;
 	var shortest;
@@ -37,10 +38,10 @@
 					newMarker(ray[count].lat, ray[count].lng, oppImage, ray[count].username, firstTime);
 					firstTime = 0;
 				}
-				newMarker(myLat, myLng, youImage, "You");
+				newMarker(myLat, myLng, youImage, userTitle);
 			}
 		}
-		request.send("username=M7vIBNgdqn&lat=" + myLat + "&lng=" + myLng);
+		request.send("username=" + userTitle + "&lat=" + myLat + "&lng=" + myLng);
 	}
 	
 	function getLocation() {
@@ -62,7 +63,7 @@
     function newMarker(lat, lng, icon, title, firstTime) {
     	var image = icon;
     	var distance = 0;
-    	if (title != "You") {
+    	if (title != userTitle) {
     		myPos = new google.maps.LatLng(myLat, myLng);
     		carPos = new google.maps.LatLng(lat, lng);
     		distance = google.maps.geometry.spherical.computeDistanceBetween(myPos, carPos);
