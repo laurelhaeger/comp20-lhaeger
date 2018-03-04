@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Map</title>
+<meta name="viewport" content="initial-scale=1.0">
+<link rel="stylesheet" href="style.css"/>
+<meta charset="utf-8">
+<script>
+	var myLat = -99999;
+	var myLng = -99999;
+	var map;
+	var request;
+	var messages;
+	var theStirng;
+	function loadData() {
+		request = new XMLHttpRequest();
+		console.log("in load data");
+		request.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
+		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		request.onreadystatechange = function() {
+			console.log("state changed");
+			if (request.readyState == 4 && request.status == 200) {
+				console.log("ready state and status are 4 and 200");
+				theString = request.responseText;
+				console.log(theString);
+				messages = JSON.parse(theString);
+				console.log(messages);
+				for (count = 0; count < messages.vehicles.length; count++) {
+					console.log("Lat: " + messages.vehicles[count].lat + " Long: " + messages.vehicles[count].lng);
+					newMarker(messages.vehicles[count].lat, messages.vehicles[count].lng, "/vehicle.png", messages.vehicles[count].username);
+				}
+			}
+		}
+		request.send("username=M7vIBNgdqn&lat=" + myLat + "&lng=" + myLng);
+	}
+	
+	function getLocation() {
+		navigator.geolocation.getCurrentPosition(function(somePos) {
+			myLat = somePos.coords.latitude;
+			myLng = somePos.coords.longitude;
+			console.log("lat: " + myLat + " lng:" + myLng);
+			initMap();
+			loadData();
+		});	
+	}
+
+	function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+        	center: {lat: myLat, lng: myLng},
+          	zoom: 15
+        });
+        newMarker(myLat, myLng, "/icon.jpg", "You");
+    }
+
+    function newMarker(lat, lng, icon, title){
+    	var image = icon;
+        marker = new google.maps.Marker({
+			position: {lat: lat, lng: lng},
+			title: title,
+			icon: image
+		});
+		var infowindow = new google.maps.InfoWindow();
+		marker.setMap(map);
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.setContent(marker.title);
+			infowindow.open(map, marker);
+		});
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8GsxVbGljcZT6zUCFid7sNMJsd2R7ot4&callback=initMap"
+    async defer></script>
+</head>
+<body onload = "getLocation()">
+    <div id="map"></div>
+</body>
+</html>
