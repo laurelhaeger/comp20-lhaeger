@@ -14,6 +14,9 @@
 	var request;
 	var shortest;
 	var infowindow;
+	var oppImage;
+	var youImage;
+	var ray;
 	function loadData() {
 		request = new XMLHttpRequest();
 		request.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
@@ -23,13 +26,14 @@
 				theString = request.responseText;
 				messages = JSON.parse(theString);
 				firstTime = 0;
-				oppImage = "/vehicle.png";
-				youImage = "/icon.jpg";
-				ray = messages.vehicles;
 				if (theString[2] == "p") {
 					oppImage = "/icon.jpg";
 					youImage = "/vehicle.png";
-					ray = message.passengers;
+					ray = messages.passengers;
+				} else {
+					oppImage = "/vehicle.png";
+					youImage = "/icon.jpg";
+					ray = messages.vehicles;
 				}
 				for (count = 0; count < ray.length; count++) {
 					if (count == 0) {
