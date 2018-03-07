@@ -12,7 +12,7 @@
 	var userTitle = "M7vIBNgdqn"
 	var map;
 	var request;
-	var shortest;
+	var shortest = -1;
 	var infowindow;
 	var oppImage;
 	var youImage;
@@ -78,12 +78,19 @@
     			shortest = distance;
     		}
     	} else {
-    		distance = shortest;
+    		if (shortest == -1) {
+    			distance = "N/A"
+    		} else {
+    			distance = shortest;
+    		}
     	}
-    	distance = Math.round(distance * 1000) / 1000;
+    	if (distance != "N/A") {
+    		distance = Math.round(distance * 1000) / 1000;
+    		distance += " miles"
+    	}
         var marker = new google.maps.Marker({
 			position: {lat: lat, lng: lng},
-			title: "User: " + title + " Distance: " + distance + " miles",
+			title: "User: " + title + "<div>" + "Distance: " + distance + "</div>",
 			icon: image
 		});
 		infowindow = new google.maps.InfoWindow();
