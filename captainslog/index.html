@@ -8,7 +8,17 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        // Your work will be done here...
+    $(document).ready(function(){
+        $("#msg").keypress(function(event) {
+            if (event.which == 13 ) {
+                var val = $("#msg").val();
+                var date = new Date();
+                $("#log").prepend("<div>" + date + " - " + val + "<div>");
+                $("#msg").val('');
+            }
+        });
+    });
+        
     </script>
 </head>
 
