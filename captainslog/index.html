@@ -9,13 +9,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
+        var numItems = localStorage.length;
+        for (i = 0; i < localStorage.length; i++) {
+            val = localStorage.getItem(i);
+            $("#log").prepend("<div>" + val + "<div>");
+        }
         $("#msg").keypress(function(event) {
             if (event.which == 13 ) {
                 val = $("#msg").val();
                 date = new Date();
-                localStorage.setItem(date, val);
-                $("#log").prepend("<div>" + date + " - " + val + "<div>");
+                val = date + " - " + val;
+                localStorage.setItem(numItems, val);
+                $("#log").prepend("<div>" + val + "<div>");
                 $("#msg").val('');
+                numItems++;
             }
         });
     });
