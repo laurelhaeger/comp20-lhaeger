@@ -19,7 +19,7 @@
 	var ray;
 	function loadData() {
 		request = new XMLHttpRequest();
-		request.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
+		request.open("POST", "https://blooming-woodland-17623.herokuapp.com/rides", true);
 		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		request.onreadystatechange = function() {
 			if (request.readyState == 4 && request.status == 200) {
@@ -27,12 +27,12 @@
 				messages = JSON.parse(theString);
 				firstTime = 0;
 				if (theString[2] == "p") {
-					oppImage = "/icon.jpg";
-					youImage = "/vehicle.png";
+					oppImage = "icon.jpg";
+					youImage = "vehicle.png";
 					ray = messages.passengers;
 				} else {
-					oppImage = "/vehicle.png";
-					youImage = "/icon.jpg";
+					oppImage = "vehicle.png";
+					youImage = "icon.jpg";
 					ray = messages.vehicles;
 				}
 				for (count = 0; count < ray.length; count++) {
