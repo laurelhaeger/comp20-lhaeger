@@ -13,7 +13,15 @@
 	<div>In the source code, the username and password for the MongoDB database were included. Because of this I was directly able to access the databases. Although I could have done pretty much anything I wanted to the databases including deleting them and changing the number of fields, etc. I choose to start by simply insert invalid input, which crashed the app.</div>
 	<h1>Issues Found</h1>
 	<div>
-		<h3>Issue 1</h3>
+	<h3>Issue 1</h3>
+		<ul>
+		<li>Issue: Allowing '*' for CORS.</li>
+		<li>Location: Source code (affects all pages).</li>
+		<li>Severity: I would say this is high because anyone can get access to the data presented on the page. This is problematic because the website contains information about users locations at specific times.</li>
+		<li><img src = "cors.jpg" alt = "CORS allowing all"></li>
+		<li>Resolution: Only allow specific types of access to the server, but not all.</li>
+	</ul>
+	<h3>Issue 2</h3>
 		<ul>
 		<li>Issue: Including the username and password in the source code.</li>
 		<li>Location: Source code (affects all pages).</li>
@@ -21,7 +29,7 @@
 		<li><img src = "dbinfo.jpg" alt = "DB username and password"></li>
 		<li>Resolution: The username and password just doesn't have to be included in the code. A simply localhost would work as the final setup for the database as well.</li>
 	</ul>
-	<h3>Issue 2</h3>
+	<h3>Issue 3</h3>
 	<ul>
 		<li>Issue: Using the shell to insert information directly to the db breaks the application.</li>
 		<li>Location: All pages of the app.</li>
