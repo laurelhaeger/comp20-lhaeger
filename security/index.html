@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Security Flaws</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<h1>Introduction</h1>
+	<div>The goal of this task was to find security flaws in a fellow student's NOTUBER application built through heroku.</div>
+	<h1>Methodology</h1>
+	<div>The first thing that I tried was to look for sanatation errors. Unfortunately, there were none to be found. The next thing that I worked with was the source code for the app to see if there was a flaw that I could take advantage of through there. I didn't end up using any outside tools.</div>
+	<h1>Abstract of Findings</h1>
+	<div>In the source code, the username and password for the MongoDB database were included. Because of this I was directly able to access the databases. Although I could have done pretty much anything I wanted to the databases including deleting them and changing the number of fields, etc. I choose to start by simply insert invalid input, which crashed the app.</div>
+	<h1>Issues Found</h1>
+	<div><ul><h3>Issue 1</h3>
+		<li>Issue: Including the username and password in the source code.</li>
+		<li>Location: Source code (affects all pages).</li>
+		<li>Severity: I would say this is high becuase giving access to your databases and allowing for anyone with the code to access them is probably not a good idea if there was more senstiive information in it (although locations are not great either).</li>
+		<li><img src = "dbinfo.jpg" alt = "DB username and password"></li>
+		<li>Resolution: The username and password just doesn't have to be included in the code. A simply localhost would work as the final setup for the database as well.</li>
+	</ul>
+	<ul><h3>Issue 2</h3>
+		<li>Issue: Using the shell to insert information directly to the db breaks the application.</li>
+		<li>Location: All pages of the app.</li>
+		<li>Severity: I would say this is high because the app no longer functions when this is done.</li>
+		<li><img src = "invalidinput.jpg" alt = "Invalid input entered">
+		<img src = "appfail.jpg" alt = "Application failure page"></li>
+		<li>Resolution: This issue stems from allowing the user access to the information to the database, so it could be resolved by not including the username/password in the source code.</li>
+	</ul>
+	</div>
+	<h1>Conclusion</h1>
+	<div>Generally I would say that the input for this website was sanatized well and since we have not learned many other ways of breaking the code, I think he did a good job with this project. As most of my methods of breaking the app came from the source code, it can definitely be said that having access to the code gives away a lot of information. Asige from taking away the given information about the database to the user, I'm not really sure what could make this better due to my limited knowledge of security.</div>
+	<h1>References</h1>
+	<div><ul>
+		<a href="https://docs.mongodb.com/manual/reference/method/">MongoDB Shell Commands</a></ul></div>
+</body>
+</html>
