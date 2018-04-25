@@ -18,6 +18,7 @@
 		<li>Issue: Allowing '*' for CORS.</li>
 		<li>Location: Source code (affects all pages).</li>
 		<li>Severity: I would say this is high because anyone can get access to the data presented on the page. This is problematic because the website contains information about users locations at specific times.</li>
+		<li>Description: Error was found by looking through source code.</li>
 		<li><img src = "cors.jpg" alt = "CORS allowing all"></li>
 		<li>Resolution: Only allow specific types of access to the server, but not all.</li>
 	</ul>
@@ -26,6 +27,7 @@
 		<li>Issue: Including the username and password in the source code.</li>
 		<li>Location: Source code (affects all pages).</li>
 		<li>Severity: I would say this is high becuase giving access to your databases and allowing for anyone with the code to access them is probably not a good idea if there was more senstiive information in it (although locations are not great either).</li>
+		<li>Description: Error was found by checking out set up of database.</li>
 		<li><img src = "dbinfo.jpg" alt = "DB username and password"></li>
 		<li>Resolution: The username and password just doesn't have to be included in the code. A simply localhost would work as the final setup for the database as well.</li>
 	</ul>
@@ -34,6 +36,7 @@
 		<li>Issue: Using the shell to insert information directly to the db breaks the application.</li>
 		<li>Location: All pages of the app.</li>
 		<li>Severity: I would say this is high because the app no longer functions when this is done.</li>
+		<li>Description: Error was found by inputting invalid input through the shell.</li>
 		<li><img src = "invalidinput.jpg" alt = "Invalid input entered">
 		<img src = "appfail.jpg" alt = "Application failure page"></li>
 		<li>Resolution: This issue stems from allowing the user access to the information to the database, so it could be resolved by not including the username/password in the source code.</li>
